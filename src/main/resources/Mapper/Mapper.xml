@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ycy.mapper.ArticleMapper">
+	<select id="list" resultType="com.ycy.bean.Article" parameterType="map">
+		select * from article 
+		<where>
+			<if test="title != null and title !=''">
+				and title like  '%${title}%'
+			</if>
+			
+			<if test="startTime != null and startTime !=''">
+				and created >=#{startTime}
+			</if>
+
+			<if test="endTime != null and endTime !=''">
+				and created &lt;=#{endTime}
+			</if>
+		</where>
+	</select>
+	<insert id="insertArticle" parameterType="com.ycy.bean.Article">
+		insert into article 
+		(title,context,status,created)
+		values
+		(#{title},#{context},#{status},#{created})
+	</insert>
+</mapper>
